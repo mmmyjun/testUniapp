@@ -31,25 +31,31 @@
 				fail: () => {},
 				complete: () => {}
 			});
+
+			wx.setNavigationBarTitle({
+				title: '当前页面' + e.newsid
+			})
 		},
 		methods: {
-			
+
 		}
 	}
 </script>
 
 <style>
-.content {
-	padding: 10upx 2%;
-	width: 2%;
-	flex-wrap: wrap;
-}
-.title {
-	line-height: 2em;
-	font-weight: 700;
-	font-size: 38upx;
-}
-.art-content {
-	line-height: 2em;
-}
+	.content {
+		padding: 10upx 2%;
+		width: 2%;
+		flex-wrap: wrap;
+	}
+
+	.title {
+		line-height: 2em;
+		font-weight: 700;
+		font-size: 38upx;
+	}
+
+	.art-content {
+		line-height: 2em;
+	}
 </style>

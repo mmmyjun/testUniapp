@@ -17,11 +17,6 @@
 	display: flex;
 	justify-content: center;
 }
-.title {
-	font-size: 36rpx;
-	color: #8f8f94;
-}
-.uni-media-list-logo {
-	width: 80rpx;
-}
+.uni-media-list-body{height: auto;}
+.uni-media-list-text-top{line-height:1.6em;}
 

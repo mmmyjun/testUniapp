@@ -167,9 +167,6 @@ exports.default = void 0;
 //
 //
 //
-//
-//
-//
 var _default = {
   data: function data() {
     return {
@@ -177,10 +174,16 @@ var _default = {
       news: []
     };
   },
+  onReady: function onReady() {
+    console.log('page index onready======');
+  },
+  onShow: function onShow() {
+    console.log('page index onShow======');
+  },
   onLoad: function onLoad() {
     var _this = this;
     // 页面加载成功了
-    console.log('page index onload..');
+    console.log('page index onload======');
     uni.showLoading({
       title: '加载中...'
     });
@@ -196,6 +199,9 @@ var _default = {
       fail: function fail() {},
       complete: function complete() {}
     });
+  },
+  mounted: function mounted() {
+    console.log('index mounted*****');
   },
   methods: {
     openInfo: function openInfo(e) {
