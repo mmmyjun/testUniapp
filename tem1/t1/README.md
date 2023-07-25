@@ -494,4 +494,40 @@ module.exports.toUpper = function(str){
 
 
 - 自定义组件
- - 创建组件爱你 
+ - 组件的生命周期 lifetimes
+  1) created: 还不能调用setData
+  2) attached
+  3) ready
+  4) moved
+  5) detached
+  6) error
+ - 组件所在页面的生命周期 pageLifetimes
+  1) show
+  2) hide
+  3) resize
+- 父子组件之间通信的3种方式
+ 1) 属性绑定
+ 2) 事件绑定：子组件js中，通过this.triggerEvent('事件名', '参数对象')，父组件通过e.detail获取子传过来的数据\
+  <child count="{{count}}" bind:sync="syncCount"></child>  this.triggerEvent('sync',{value})
+  ```js
+  addCount() {
+	  this.setData({
+		  count: this.properties.count + 1
+	  })
+	  this.triggerEvent('sync',{value: this.properties.count})
+  }
+  ```
+ 3) 获取组件实例：父组件通过this.selectComponent获取子组件;
+ ```js
+ getChild() {
+	const child = this.selectComponent('.ca')
+	// child.setData({
+	// 	count: child.properties.count + 1
+	// })
+	child.addCount()
+ }
+ ```
+ 
+ behaviors（实现代码共享的一种方式）:类似于vue中的mixin; 包含一组属性、数据、生命周期函数和方法
+ 
+  
