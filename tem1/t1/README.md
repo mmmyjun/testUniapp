@@ -528,6 +528,58 @@ module.exports.toUpper = function(str){
  }
  ```
  
- behaviors（实现代码共享的一种方式）:类似于vue中的mixin; 包含一组属性、数据、生命周期函数和方法
+- behaviors（实现代码共享的一种方式）:类似于vue中的mixin; 包含一组属性、数据、生命周期函数和方法；\
+ - 在pages同级创建一个behaviors文件夹里面存放behaviorsxx.js。
+ ```js
  
-  
+ ```
+ - 在某个组件.js中require('../../behaviors/behaviorsxx')
+ ```js
+ const myBehavior = require('../../behaviors/behaviorsxx')
+ Component({
+	 behaviors: [myBehavior]
+ })
+ ```
+ - 组件和引用的behavior中可以包含同名的字段
+  - 同名data.
+  - 同名属性properties或methods
+  - 同名的生命周期函数
+
+- 小程序npm包，使用时有3个限制
+ - 不支持依赖于node内置库的包，比如(fs,path)
+ - 不支持依赖于浏览器内置对象的包:jquery(window)
+ - 不支持依赖于c++插件的包
+-npm包-[vant weapp](https://youzan.github.io/vant-weapp) 有赞前端团队开源的小程序ui组件库，使用的是mit开源许可协议
+ - 安装vant组件库.主要有以下3步:
+  1) 通过npm安装(建议指定版本为@1.3.3)
+  2) 构建npm包
+  3) 修改app.json
+- 安装vant
+  1) 找到项目根路径，npm init -y，生成package.json
+  2) npm i @vant/weapp@1.3.3 -S --production
+  3) 微信开发者程序工具=>构建npm,勾选“使用npm模块”，构建完成后pages同级生成miniprogram_npm文件夹，即可引入组件
+  4) 点击详情=>本地设置=>使用npm模块
+  5) 把app.json的style: 'v2'去除，小程序的新版基础组件强行加上了许多样式，难以去除，不关闭将造成部分组件样式混乱
+- 使用
+ - app.json里usingCompnents
+
+- css自定义变量主题色
+ - 在app.wxss中写入css变量
+ ```js
+ page {
+	 --button-danger-background-color: red;
+	 --button-danger-border-color: green;
+ }
+ ```
+- npm包-API Promise(依赖 miniprogram-api-promise)
+ - npm install --save miniprogram-api-promise@1.0.4 会装在pages同级为了确保构建不失败先删除miniprogram_npm文件夹(!!!!!!每次安装新的包后)后，点击工具=>构建，\
+此时，miniprogram_npm包重新生成在pages同级，此时文件夹下有@vant和miniprogram-api-promise两个包
+```js
+// 在小程序入口文件中(app.js),只需调用一次promisifyAll()方法，即可实现异步api的Promise化
+import { promisifyAll } from 'miniprogram-api-promise'
+const wxp = wx.p = {}
+// promisify all wx's api
+promisifyAll(wx, wxp)
+```
+记录解决报错：miniprogram_npm/@vant/weapp/calendar/components/month/index.js 已被代码依赖分析忽略，无法被其他模块引用。你可根据控制台中的【代码依赖分析】告警信息修改代码，或关闭【过滤无依赖文件】功能。详情
+解决方案:
